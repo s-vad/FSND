@@ -236,13 +236,22 @@ def create_app(test_config=None):
       abort(422)
 
     if category['id'] != 0:
-      question = Question.query.filter(Question.category == category['id'], Question.id.notin_(previous_questions)).first()
+      questions = Question.query.filter(Question.category == category['id']).all()
     else:
-      question = Question.query.filter(Question.id.notin_(previous_questions)).first()
+      questions = Question.query.all()
+
+    if(len(questions) == len(previous_questions)):
+      return jsonify({
+        'success': True,
+        'message': "game over"
+        })
+    
+    rem_questions = [question for question in questions if question.id not in previous_questions]
+    next_question = random.choice(rem_questions).format()
 
     return jsonify({
         "success": True,
-        "question": question.format() if question != None else None
+        "question": next_question
     })
 
   '''
