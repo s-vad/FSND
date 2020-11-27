@@ -21,6 +21,7 @@ pip install -r requirements.txt
 ```
 
 This will install all of the required packages we selected within the `requirements.txt` file.
+If some of the packages do not install due to dependencies on your machine, comment out the specific package from requirements.txt and try installing them manually with pip
 
 ##### Key Dependencies
 
